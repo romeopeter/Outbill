@@ -1,6 +1,6 @@
 {
   "name": "Outbill",
-  "description": "Invoice billing browser plugin for small businesses.",
+  "description": "Easy invoice for small businesses.",
   "version": "1.0",
   "manifest_version": 3,
   "action": {
