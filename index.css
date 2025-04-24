@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+:root {
+--brand-black: #111827;
+--brand-blue: #2563eb;
+--brand-blue-light: #eff5ff;
+--brand-blue-faded: #dbeafe;
+--brand-gray: #f9fafb;
+}
+
+@layer components {
+
+}
+
+@theme {
+    
+}
