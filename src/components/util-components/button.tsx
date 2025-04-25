@@ -1,4 +1,7 @@
 import React from "react";
+import { CN } from "../../util-functions/classname-merge";
+
+/* ---------------------------------------------------------------- */
 
 export type ButtonShape = {
   text?: string;
@@ -21,7 +24,7 @@ export type ButtonShape = {
  */
 export default function Button({
   text,
-  variant,
+  variant = "solid",
   children,
   className,
   type = "button",
@@ -30,13 +33,13 @@ export default function Button({
 }: ButtonShape) {
   const buttonVariant =
     variant === "solid"
-      ? "bg-[var(--brand-green)] text-white"
-      : "bg-white border border-[var(--brand-green)] text-[var(--brand-green)]";
+      ? "bg-[var(--brand-blue)] text-white"
+      : "bg-transparent border border-[var(--brand-blue)] text-[var(--brand-blue)]";
 
   return (
     <button
       type={type}
-      className={`h-12 p-4 ${buttonVariant} ${className}`}
+      className={`h-12 p-4 ${CN(buttonVariant, className)} cursor-pointer`}
       onClick={onClick}
       {...props}
     >
