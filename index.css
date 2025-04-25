@@ -1,17 +1,63 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
 
 :root {
---brand-black: #111827;
---brand-blue: #2563eb;
---brand-blue-light: #eff5ff;
---brand-blue-faded: #dbeafe;
---brand-gray: #f9fafb;
+  --brand-black: #111827;
+  --brand-blue: #2563eb;
+  --brand-blue-light: #eff5ff;
+  --brand-blue-faded: #dbeafe;
+  --brand-gray: #f9fafb;
+}
+
+/* Sacramento fonface for logo */
+@font-face {
+  font-family: "sacramento";
+  src: url("/sacramento/Sacramento-Regular.ttf");
+  font-display: swap;
 }
 
 @layer components {
-
 }
 
 @theme {
-    
+  /* fonts var */
+  --font-sacramento: "sacramento", cursive;
+  --font-quicksand: "Quicksand", sans-serif;
+  --font-source-code: "Source Code Pro", monospace;
+}
+
+/* Set plugin pop dimension */
+html,
+body {
+  width: 40rem;
+  height: 37.5rem;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden !important;
+}
+
+#root,
+.App,
+#App,
+.app,
+#app {
+  width: 100%;
+  height: 100%;
+}
+
+/* scroll track */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: var(--brand-black);
+  /* border-radius: 10px; */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #4b5e8159;
+  border-radius: 10px;
 }
