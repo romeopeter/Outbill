@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "path";
 
-/* ---------------------------------------- */
+/* ------------------------------------------------------ */
 
 export default defineConfig({
   plugins: [tailwindcss(), react()],
@@ -13,7 +13,7 @@ export default defineConfig({
       input: {
         ["index.html"]: resolve(__dirname, "index.html"),
         ["index.css"]: resolve(__dirname, "index.css"),
-        popup: resolve(__dirname, "src/popup/main.tsx"),
+        popup: resolve(__dirname, "src/main.tsx"),
         content: resolve(__dirname, "src/content-scripts/main.ts"),
         background: resolve(__dirname, "src/background-tasks/main.ts"),
       },
