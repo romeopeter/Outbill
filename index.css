@@ -1,5 +1,5 @@
-@import "tailwindcss";
 @import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Source+Code+Pro:ital,wght@0,200..900;1,200..900&display=swap");
+@import "tailwindcss";
 
 :root {
   --brand-black: #111827;
@@ -25,6 +25,9 @@
   --font-quicksand: "Quicksand", sans-serif;
   --font-source-code: "Source Code Pro", monospace;
 }
+
+/* override dark mode variant to use custom selector  */
+@custom-variant dark (&:where(.dark, .dark *));
 
 /* Set plugin pop dimension */
 html,
@@ -60,4 +63,8 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #4b5e8159;
   border-radius: 10px;
+}
+
+@media screen {
+  
 }
