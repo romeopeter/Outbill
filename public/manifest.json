@@ -6,5 +6,13 @@
   "action": {
     "default_popup": "index.html",
     "default_icon": "sample-icon.png"
-  }
+  },
+  "background": {
+    "service_worker": "/background-tasks/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ]
 }
