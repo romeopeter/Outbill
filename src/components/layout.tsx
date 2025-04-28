@@ -65,7 +65,7 @@ export default function Layout({ children }: { children: ReactNode }) {
                 <span>Clients</span>
               </Link>
 
-              <Link to="/profile" className="rounded-lg p-2 flex items-center">
+              <Link to="/profile" className="rounded-lg p-2 flex items-center" title="">
                 <User className="text-xl mr-2" weight="duotone" />
 
                 <span>Profile</span>
