@@ -1,5 +1,5 @@
 import React from "react";
-import { CN } from "../../util-functions/classname-merge";
+import { CN } from "../../utils/classname-merge";
 
 /* ----------------------------------------------------------- */
 
