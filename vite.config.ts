@@ -12,10 +12,10 @@ export default defineConfig({
     rollupOptions: {
       input: {
         ["index.html"]: resolve(__dirname, "index.html"),
-        ["index.css"]: resolve(__dirname, "index.css"),
-        popup: resolve(__dirname, "src/main.tsx"),
-        content: resolve(__dirname, "src/content-scripts/main.ts"),
-        background: resolve(__dirname, "src/background-tasks/main.ts"),
+        popup: resolve(__dirname, "src/popup.tsx"),
+        panels: resolve(__dirname, "src/main.tsx"),
+        script: resolve(__dirname, "src/content-scripts/script.ts"),
+        task: resolve(__dirname, "src/background-tasks/task.ts"),
       },
       output: {
         entryFileNames: (chunkInfo) => {
@@ -24,11 +24,19 @@ export default defineConfig({
             return "[name].css";
           }
 
-          if (chunkInfo.name === "content") {
+          if (chunkInfo.name === "popup") {
+            return "popup/[name].js";
+          }
+
+          if (chunkInfo.name === "panels") {
+            return "panels/[name].js";
+          }
+
+          if (chunkInfo.name === "script") {
             return "content-scripts/[name].js";
           }
 
-          if (chunkInfo.name === "background") {
+          if (chunkInfo.name === "task") {
             return "background-tasks/[name].js";
           }
 
@@ -40,6 +48,13 @@ export default defineConfig({
       },
     },
     outDir: "dist",
+  },
+  resolve: {
+    alias: {
+      "@components": resolve(__dirname, "src/components"),
+      "@utils": resolve(__dirname, "src/utils"),
+      "@hooks": resolve(__dirname, "src/panels/hooks"),
+    },
   },
   publicDir: "public",
 });
