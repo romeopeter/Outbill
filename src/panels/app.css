@@ -1,0 +1,50 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import "tailwindcss";
+
+@layer {
+  :root {
+    --brand-black: #111827;
+    --brand-blue: #2563eb;
+    --brand-blue-light: #eff5ff;
+    --brand-blue-faded: #dbeafe;
+    --brand-gray: #f9fafb;
+    --font-inter: "Inter", sans-serif;
+    --font-dm-sans: "DM Sans", sans-serif !important;
+
+    font-family: var(--font-inter);
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    line-height: 1.5;
+
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-dm-sans);
+    font-weight: 600 !important;
+  }
+
+  p,
+  div,
+  span {
+    font-family: "Inter", sans-serif !important;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+}
+
+@theme {
+  /* fonts var */
+  --font-inter: var(--font-inter);
+  --font-dm-sans: var(--font-dm-sans);
+}
