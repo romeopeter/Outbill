@@ -1,3 +1,15 @@
-import OverviewPanel from "./overvew";
+import OverviewPanel from "./overview";
+import InvoicesPanel from "./invoices";
+import TemplatesPanel from "./templates";
+import CustomersPanel from "./customers";
+import ProfilePanel from "./profile";
 
-export {OverviewPanel}
+/* ------------------------------------------ */ 
+
+export {
+  OverviewPanel,
+  InvoicesPanel,
+  TemplatesPanel,
+  CustomersPanel,
+  ProfilePanel,
+};
