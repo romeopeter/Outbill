@@ -78,22 +78,22 @@ body {
   height: 100%;
 }
 
-/* scroll track */
+/* SCROLL BAR */
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
-::-webkit-scrollbar-track {
-  background: var(--brand-black);
-  /* border-radius: 10px; */
-}
-
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #4b5e8159;
   border-radius: 10px;
 }
 
-@media screen {
+/* Custom Scrollbar in dark mode */
+.dark ::-webkit-scrollbar-track {
+  background: var(--brand-black);
+}
+
+/* Custom Scrollbar in light mode */
+.light ::-webkit-scrollbar-track {
+  background: var(--brand-blue-faded);
 }
