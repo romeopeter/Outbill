@@ -1,3 +1,4 @@
+/*
 import { useEffect, useRef } from "react";
 import Button from "./components/util-components/button";
 import {
@@ -8,11 +9,9 @@ import {
   PaperPlaneTilt,
   Sun,
 } from "@phosphor-icons/react";
-import browser from "webextension-polyfill";
 import { useLocalStorage } from "./hooks/use-local-storage";
 import { useLocation, useNavigate } from "react-router-dom";
-
-/* ------------------------------------------------------------------------------- */
+import getBrowserApi from "./utils/browser-extn-api";
 
 export default function Popup() {
   const [storedValue, setStoredValue] = useLocalStorage("theme", "light");
@@ -37,8 +36,15 @@ export default function Popup() {
     if (isInitiallyRouted.current) {
       console.log("Effect already processed, returning."); // <-- Log 2
 
-      return
-    };
+      return;
+    }
+
+    if (!location.search && window.location.search) {
+      console.warn("[New Tab] location.search is empty, but window.location.search has params. Waiting for React Router to sync.", "window.location.search:", window.location.search);
+      // By not setting initialRouteProcessed.current to true here,
+      // the effect will re-run when `location` (hopefully with search params) changes.
+      return;
+  }
 
     const queryParams = new URLSearchParams(location.search);
     const initialRoute = queryParams.get("initialRoute");
@@ -50,6 +56,7 @@ export default function Popup() {
     if (initialRoute) {
       console.log("found initial route in query param:", initialRoute); // <-- Log 3
       console.log("Attempting to navigate to:", initialRoute); // <-- Log 5
+
       // route to the specified route
       navigate(initialRoute, { replace: true });
     } else {
@@ -57,30 +64,38 @@ export default function Popup() {
     }
 
     isInitiallyRouted.current = true;
-  }, [location.search, navigate]);
+  }, [location, navigate]);
 
   const toggleThemeChange = (theme: string) => setStoredValue(theme);
 
   // Open panel in new tab
-  const openRouteInNewTab = (routePath: string) => {
-    if (typeof browser !== undefined) {
-      const baseUrl = browser.runtime.getURL("index.html");
-      const urlWithRoute = `${baseUrl}?initialRoute=${encodeURIComponent(
-        routePath
-      )}`;
+  const openRouteInNewTab = async (routePath: string) => {
+    const browser = await getBrowserApi();
 
-      console.log(urlWithRoute);
+    if (browser) {
+      try {
+        const baseUrl = browser.runtime.getURL("index.html");
+        const urlWithRoute = `${baseUrl}?initialRoute=${encodeURIComponent(
+          routePath
+        )}`;
 
-      browser.tabs.create({ url: urlWithRoute });
+        browser.tabs.create({ url: urlWithRoute });
+      } catch (error) {
+        console.error(error);
+      }
     }
   };
 
   return (
     <div className="bg-[var(--brand-blue-light)] dark:bg-[var(--brand-black)] flex flex-col justify-between gap-y-32 text-white p-4">
       <header className="flex items-center justify-between">
-        <h1 className="text-[var(--brand-black)] dark:text-white text-xl font-sacramento">
-          OutBill.
-        </h1>
+        <div id="logo">
+          {storedValue === "dark" ? (
+            <img src="/logo-white.svg" className="w-[6rem] h-auto" alt="" />
+          ) : (
+            <img src="/logo-dark.svg" className="w-[6rem] h-auto" alt="" />
+          )}
+        </div>
 
         <div className="size-8 rounded-full bg-[#22365cad] flex items-center justify-center cursor-pointer">
           {storedValue === "light" ? (
@@ -151,23 +166,16 @@ export default function Popup() {
           </div>
         </div>
 
-        <p className="text-center text-[#4b5e8159] text-[1.125rem] pt-4 font-source-code font-normal">
+        <p className="text-center text-[#4b5e8159] text-[1.125rem] pt-4 font-normal">
           Invoicing made easy
         </p>
       </div>
 
       <div id="quick-actions" className="flex justify-center gap-4">
         <Button
-          text="Send an invoice"
-          variant="outline"
-          className="w-auto h-[2.756rem] font-light rounded-xl flex items-center justify-center border-[0.8px]"
-          onClick={() => openRouteInNewTab("/overview")}
-        />
-
-        <Button
           text="Create invoice"
           variant="solid"
-          className="w-auto h-[2.756rem] font-light rounded-xl flex items-center justify-center"
+          className="w-[16rem] h-[2.756rem] font-light rounded-xl flex items-center justify-center"
           onClick={() => openRouteInNewTab("/overview")}
         />
       </div>
@@ -208,4 +216,85 @@ export default function Popup() {
       </div>
     </div>
   );
+} */
+
+const documentRoot = document.documentElement;
+const themeSwitcher = document.querySelector("#theme-switcher-icons") as HTMLImageElement;
+const invoiceBtn = document.querySelector("#create-invoice-btn");
+const logo = document.querySelector("#logo") as HTMLImageElement;
+const dateContainer =  document.getElementById("#date-container") as HTMLSpanElement;
+
+function applyTheme(currentTheme: string = "light") {
+  window.localStorage.setItem("outbill-theme", currentTheme);
+
+  // Remove existing theme and add current theme.
+  documentRoot.classList.remove("dark", "light");
+  documentRoot.classList.add(currentTheme);
+
+  // Create theme switcher/toggler icons
+  const moonIcon = document.createElement('i');
+  const sunIcon = document.createElement('i');
+
+  if (logo) {
+    if (currentTheme === "dark") {
+      logo.src = "/icons/logo-white.svg";
+    } else {
+      logo.src = "/icons/logo-dark.svg";
+    }
+  }
+
+  if (themeSwitcher) {
+    if (currentTheme === "dark") {
+      themeSwitcher.src = "/icons/sun-fill.svg";
+    } else {
+      themeSwitcher.src = "/icons/moon-fill.svg";
+    }
+  }
+
+  if (themeSwitcher) {
+    if (currentTheme === "dark") {
+      sunIcon.classList.add("ph-bold","ph-sun")
+      // themeSwitcher.removeChild
+      themeSwitcher.appendChild(sunIcon)
+    } else {
+      moonIcon.classList.add("ph-bold","ph-moon")
+      // themeSwitcher.removeChild(moonIcon)
+      themeSwitcher.appendChild(moonIcon)
+    }
+  }
 }
+
+// Load and apply the initial theme
+let currentTheme = window.localStorage.getItem("outbill-theme");
+applyTheme(currentTheme || "light");
+
+themeSwitcher.addEventListener("click", () => {
+  let newTheme = documentRoot.classList.contains("dark") ? "light" : "dark";
+
+  console.log(
+    `Change theme from ${
+      documentRoot.classList.contains("dark") ? "dark" : "light"
+    } to ${newTheme}`
+  );
+
+  // Apply the new theme and update localStorage
+  applyTheme(newTheme);
+  window.localStorage.setItem("outbill-theme", newTheme);
+});
+
+/* Create tabs and render app panels (Managed by ReactJS) */
+invoiceBtn?.addEventListener("click", () => {
+  //@ts-ignore
+  if (window.chrome && window.chrome.runtime) {
+    //@ts-ignore
+    const panelUrl = window.chrome.runtime.getURL("/panels/panels.html");
+    //@ts-ignore
+    window.chrome.tabs.create({ url: panelUrl });
+  } else {
+    console.log("Extension API not available");
+  }
+});
+
+// Footer date
+const year = new Date().getFullYear()
+dateContainer.innerHTML = `&copy; ${year}`;
