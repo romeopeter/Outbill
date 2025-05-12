@@ -5,11 +5,188 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>OutBill</title>
     <link rel="stylesheet" href="./index.css" />
-    <link rel="shortcut icon" href="/favicon-32.png" type="image/x-icon" />
-    <link rel="icon" href="/favicon-32.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/thin/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/light/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/fill/style.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/duotone/style.css"
+    />
   </head>
   <body>
-    <div id="root"></div>
-    <script type="module" src="./src/main.tsx"></script>
+    <main
+      class="bg-[var(--brand-blue-light)] dark:bg-[var(--brand-black)] flex flex-col justify-between gap-y-32 text-white p-4"
+    >
+      <header class="flex items-center justify-between">
+        <div>
+          <img
+            id="logo"
+            src="/icons/logo-dark.svg"
+            class="w-[6rem] h-auto"
+            alt=""
+          />
+        </div>
+
+        <div
+          class="size-8 rounded-full bg-[#22365cad] flex items-center justify-center cursor-pointer"
+        >
+          <img id="theme-switcher-icons" class="w-[1.3rem] h-auto" alt="" />
+        </div>
+      </header>
+
+      <div id="invoice-summary">
+        <div
+          class="bg-white shadow-slate-100 dark:bg-[var(--brand-blue)] dark:shadow-none rounded-md p-2 divide-y-[0.8px] divide-[var(--brand-black)] dark:divide-white space-y-3"
+        >
+          <div
+            class="flex items-center justify-between font-light pb-1 cursor-pointer"
+          >
+            <div class="flex items-center">
+              <div
+                class="size-7 rounded-full flex items-center justify-center bg-blue-400 mr-1"
+              >
+                <i class="ph ph-files text-[1.125rem]"></i>
+              </div>
+              <span
+                class="text-[var(--brand-black)] dark:text-white text-md capitalize"
+              >
+                All
+              </span>
+            </div>
+
+            <div
+              class="flex items-center text-[var(--brand-black)] dark:text-white"
+            >
+              <span class="mr-1 text-md">13</span>
+              <i class="ph ph-caret-right"></i>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between font-light pb-1 cursor-pointer"
+          >
+            <div class="flex items-center">
+              <div
+                class="size-7 rounded-full flex items-center justify-center bg-yellow-500 mr-1"
+              >
+                <i class="ph ph-file-dashed text-[1.125rem]"></i>
+              </div>
+              <span
+                class="text-[var(--brand-black)] dark:text-white text-md capitalize"
+              >
+                Draft
+              </span>
+            </div>
+
+            <div
+              class="flex items-center text-[var(--brand-black)] dark:text-white"
+            >
+              <span class="mr-1 text-md">5</span>
+              <i class="ph ph-caret-right"></i>
+            </div>
+          </div>
+
+          <div
+            class="flex items-center justify-between font-light pb-1 cursor-pointer"
+          >
+            <div class="flex items-center">
+              <div
+                class="size-7 rounded-full flex items-center justify-center bg-green-500 mr-1"
+              >
+                <i class="ph ph-envelope-simple text-[1.125rem]"></i>
+              </div>
+
+              <span
+                class="text-[var(--brand-black)] dark:text-white text-md capitalize"
+              >
+                Sent
+              </span>
+            </div>
+
+            <div
+              class="flex items-center text-[var(--brand-black)] dark:text-white text-md capitalize"
+            >
+              <span class="text-md mr-1">8</span>
+              <i class="ph ph-caret-right"></i>
+            </div>
+          </div>
+        </div>
+
+        <p
+          class="text-center text-[#4b5e8159] text-[1.125rem] pt-4 font-normal"
+        >
+          Invoicing made easy
+        </p>
+      </div>
+
+      <div id="quick-actions" class="flex justify-center gap-4">
+        <button
+          id="create-invoice-btn"
+          type="button"
+          class="w-[16rem] h-[2.756rem] font-light rounded-xl flex items-center justify-center bg-[var(--brand-blue)] cursor-pointer"
+        >
+          Create Invoice
+        </button>
+      </div>
+
+      <div class="text-[#4b5e81f0] text-sm font-light">
+        <div class="flex justify-center gap-3 mb-1">
+          <a
+            href="https://useoutbill.com"
+            target="_blank"
+            rel="noopener"
+            class="underline"
+          >
+            OutBill
+          </a>
+          <a
+            href="https://useoutbill.com/faq"
+            target="_blank"
+            rel="noopener"
+            class="underline"
+          >
+            Help
+          </a>
+          <a
+            href="https://useoutbill.com/about"
+            target="_blank"
+            rel="noopener"
+            class="underline"
+          >
+            About
+          </a>
+        </div>
+
+        <hr />
+
+        <p class="text-center">
+          <span id="#date-container">&copy;</span> | All Rights Reserved.
+        </p>
+      </div>
+    </main>
   </body>
+  <script type="module" src="src/popup.tsx"></script>
 </html>
